@@ -69,3 +69,4 @@ If you want to train your own model, you can download pre-trained weight of SSD 
 # Acknowledgement
 
 In this project, we implemented DOAM on PyTorch based on [amdegroot](https://github.com/amdegroot/ssd.pytorch)
+
