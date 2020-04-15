@@ -43,7 +43,7 @@ Motivated by filtering irrelevant information, we present a hybrid attention mec
 2. Clone the repository
 
 	```
-	git clone https://github.com/xl4533/OPIXray.git
+	git clone https://github.com/OPIXray-author/OPIXray.git
 	```
 
 3. Download OPIXray dataset
