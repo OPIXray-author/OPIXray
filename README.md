@@ -54,35 +54,55 @@ Motivated by filtering irrelevant information, we present a hybrid attention mec
 
 #### Training
 
-```
-cd DOAM
-python train.py --dataset_root='../dataset/OPIXray_Dataset/train/' --image_sets 'train_knife.txt' --transfer './weights/ssd300_mAP_77.43_v2.pth' --save_folder './checkpoints'
-```
+1. Change root to `DOAM`
 
-- `--save_folder`: the path to save the checkpoint while training.
-- `--dataset_root`: the path to the training dataset.
-- `--image_sets`: the path to a TXT file that saves all the picture names used for training.
-- `--transfer`: indicates the path to SSD pre-trained weight(available at [here](https://s3.amazonaws.com/amdegroot-models/ssd300_mAP_77.43_v2.pth)).
+    ```
+    cd DOAM
+    ```
+
+2. Modify `OPIXray_ROOT` in `data/OPIXray.py` :
+
+    ```
+    OPIXray_ROOT = 'OPIXray_Dataset/train/'	# path to trainset of OPIXray Dataset
+    ```
+
+3. run `train.py`
+
+    ```
+    python train.py --image_sets 'OPIXray_Dataset/train/train_knife.txt' --transfer './weights/ssd300_mAP_77.43_v2.pth' --save_folder './checkpoints'
+    ```
+
+    - `--save_folder`: the path to save the checkpoint while training.
+    - `--dataset_root`: the path to the training dataset.
+    - `--image_sets`: the path to a TXT file that saves all the picture names used for training.
+    - `--transfer`: indicates the path to SSD pre-trained weight(available at [here](https://s3.amazonaws.com/amdegroot-models/ssd300_mAP_77.43_v2.pth)).
 
 #### Testing
 
-```
-cd DOAM
-python test.py --dataset_root='../dataset/OPIXray_Dataset/test/' --image_sets 'test_knife.txt' --trained_model './weights/DOAM.pth' 
-```
+1. Change root to `DOAM`
 
-- `--trained_model`: the checkpoint you want to evaluate, and our trained model is available at [here](https://pan.baidu.com/s/1OXvFODNcha2b3Jq5F6qkpw) (password: m9zk).
+    ```
+    cd DOAM
+    ```
 
-#### Testing on different occlusion levels
+2. Modify `OPIXray_ROOT` in `data/OPIXray.py` :
 
-```
-cd DOAM
-python test.py --dataset_root='../dataset/OPIXray_Dataset/test/' --image_sets 'test_knife-1.txt' --trained_model './weights/DOAM.pth' 
-```
+    ```
+    OPIXray_ROOT = "OPIXray_Dataset/test/"	# path to testset of OPIXray Dataset
+    ```
+    
+3. run `test.py`
 
-- `test_knife-1.txt`: occlusion level 1 (no or slight occlusion).
-- `test_knife-2.txt`: occlusion level 2 (partial occlusion).
-- `test_knife-3.txt`: occlusion level 3 (severe or full occlusion).
+    ```
+    python test.py --imagesetfile 'OPIXray_Dataset/test/test_knife.txt' --trained_model './weights/DOAM.pth' 
+    ```
+    
+    - `--imagesetfile`: the path to a TXT file that saves all the picture names used for testing.
+    	- `test_knife.txt`: total testset
+    	- `test_knife-1.txt`: occlusion level 1 (no or slight occlusion).
+    	- `test_knife-2.txt`: occlusion level 2 (partial occlusion).
+    	- `test_knife-3.txt`: occlusion level 3 (severe or full occlusion).
+    - `--trained_model`: the checkpoint you want to evaluate, and our trained model is available at [here](https://pan.baidu.com/s/1OXvFODNcha2b3Jq5F6qkpw) (password: m9zk).
 
 ## API
 
