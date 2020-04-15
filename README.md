@@ -38,7 +38,7 @@ Motivated by filtering irrelevant information, we present a hybrid attention mec
 
 1. Install pytorch
 
-	- The code is tested on python3.5 and pytorch1.3.1
+	The code is tested on python3.5 and pytorch1.3.1
 
 2. Clone the repository
 
