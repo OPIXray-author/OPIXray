@@ -9,24 +9,18 @@ This repository is the official implementation of **De-occlusion Attention Modul
 #### OPIXray dataset:
 
 ![OPIXray](sample.png)
-![badge]()
 [![license](https://img.shields.io/github/license/:user/:repo.svg)](LICENSE)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
 ## Table of Contents
 
-- [Security](#security)
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
-- [API](#api)
+- [Results](#Results)
 - [Contributing](#contributing)
 - [Acknowledgement](#Acknowledgement)  
 - [License](#license)
-
-## Security
-
-
 
 ## Background
 
@@ -117,26 +111,18 @@ Performance comparison between DOAM-integrated network and baselines for three f
 
 ![table6](table6.png)
 
-## API
-
-
-
-## More optional sections
-
-
-
 ## Contributing
 
-See [the contributing file](CONTRIBUTING.md)!
 
-PRs accepted.
-
-Small note: If editing the Readme, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## Acknowledgement
 
-In this project, we implemented DOAM on PyTorch based on [amdegroot/ssd.pytorch](https://github.com/amdegroot/ssd.pytorch).
+Thank [amdegroot/ssd.pytorch](https://github.com/amdegroot/ssd.pytorch) for the backbone on which our DOAM based.
 
 ## License
 
-[MIT © Richard McRichface.](../LICENSE)
+The images and the corresponding annotations in OPIXray Dataset can be used **ONLY for academic purposes**, **NOT for commercial purposes**. 
+
+Copyright © 2020 by State Key Lab of Software Development Environment, Beihang University
+
+All rights reserved.
