@@ -104,6 +104,9 @@ Motivated by filtering irrelevant information, we present a hybrid attention mec
     	- `test_knife-3.txt`: occlusion level 3 (severe or full occlusion).
     - `--trained_model`: the checkpoint you want to evaluate, and our trained model is available at [here](https://pan.baidu.com/s/1OXvFODNcha2b3Jq5F6qkpw) (password: m9zk).
 
+## Results
+![figure3](figure3.png)  ![figure6](figure6.png)
+![table6](table6.png)
 ## API
 
 
