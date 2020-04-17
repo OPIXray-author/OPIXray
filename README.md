@@ -102,21 +102,21 @@ Motivated by filtering irrelevant information, we present a hybrid attention mec
 The performance of SSD and YOLOv3 under three different object occlusion levels:
 
 <div align=center>
-    <img src="images/figure3.png" />
+    <img src="images/figure3.png" width="80%" height="80%"/>
 </div>
 
 
 The amount changes of performance improvement of DOAM with occlusion level increases:
 
 <div align=center>
-    <img src="images/figure6.png" />
+    <img src="images/figure6.png" width="80%" height="80%"/>
 </div>
 
 
 Performance comparison between DOAM-integrated network and baselines for three famous detection approaches:
 
 <div align=center>
-    <img src="images/table6.png" />
+    <img src="images/table6.png" width="80%" height="80%"/>
 </div>
 
 
