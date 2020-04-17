@@ -126,7 +126,7 @@ Performance comparison between DOAM-integrated network and baselines for three f
 
 ## Acknowledgement
 
-Thank [amdegroot/ssd.pytorch](https://github.com/amdegroot/ssd.pytorch) for the backbone on which our DOAM based.
+Thank [amdegroot/ssd.pytorch](https://github.com/amdegroot/ssd.pytorch) for the SSD backbone on which our DOAM based.
 
 ## License
 
