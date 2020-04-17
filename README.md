@@ -105,7 +105,11 @@ Motivated by filtering irrelevant information, we present a hybrid attention mec
     - `--trained_model`: the checkpoint you want to evaluate, and our trained model is available at [here](https://pan.baidu.com/s/1OXvFODNcha2b3Jq5F6qkpw) (password: m9zk).
 
 ## Results
-![figure3](figure3.png)  ![figure6](figure6.png)
+The performance of SSD and YOLOv3 under three different object occlusion levels:
+![figure3](figure3.png) 
+The amount changes of performance improvement of DOAM with occlusion level increases:
+![figure6](figure6.png)
+Performance comparison between DOAM-integrated network and baselines for three famous detection approaches:
 ![table6](table6.png)
 ## API
 
