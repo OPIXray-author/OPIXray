@@ -4,11 +4,11 @@ This repository is the official implementation of **De-occlusion Attention Modul
 
 #### DOAM framework:
 
-![DOAM](framework.jpg)
+![DOAM](images/framework.jpg)
 
 #### OPIXray dataset:
 
-![OPIXray](sample.png)
+![OPIXray](images/sample.png)
 [![license](https://img.shields.io/github/license/:user/:repo.svg)](LICENSE)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
@@ -101,15 +101,21 @@ Motivated by filtering irrelevant information, we present a hybrid attention mec
 ## Results
 The performance of SSD and YOLOv3 under three different object occlusion levels:
 
- ![figure3](figure3.png)
+<center>
+    <img src="images/figure3.png" />
+</center>
 
 The amount changes of performance improvement of DOAM with occlusion level increases:
 
-![figure6](figure6.png)
+<center>
+    <img src="images/figure6.png" />
+</center>
 
 Performance comparison between DOAM-integrated network and baselines for three famous detection approaches:
 
-![table6](table6.png)
+<center>
+    <img src="images/table6.png" />
+</center>
 
 ## Contributing
 
