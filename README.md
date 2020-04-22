@@ -1,6 +1,6 @@
 # [Occluded Prohibited Items Detection: An X-ray Security Inspection Benchmark and De-occlusion Attention Module](https://arxiv.org/abs/2004.08656)
 
-This repository is the official implementation of **De-occlusion Attention Module(DOAM)** and **OPIXray dataset**. 
+This repository is the official implementation of **De-occlusion Attention Module(DOAM)** and **OPIXray dataset**. Paper link: https://arxiv.org/abs/2004.08656.
 
 #### DOAM framework:
 
@@ -8,7 +8,9 @@ This repository is the official implementation of **De-occlusion Attention Modul
 
 #### OPIXray dataset:
 
-![OPIXray](images/samples.png)
+<div align=center>
+    <img src="images/samples.png" width="80%" height="80%"/>
+</div>
 
 [![license](https://img.shields.io/github/license/:user/:repo.svg)](LICENSE)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
@@ -28,7 +30,7 @@ This repository is the official implementation of **De-occlusion Attention Modul
 
 Security inspection often deals with a piece of baggage or suitcase where objects are heavily overlapped with each other, resulting in an unsatisfactory performance for prohibited items detection in X-ray images. 
 
-In this work, first, we contribute a high-quality dataset named OPIXray, each of which is annotated manually by professional inspectors from an international airport. To the best of our knowledge, this is the first dataset specifically designed for object detection in security inspection. Second, we propose a De-occlusion Attention Module (DOAM) that can be inserted as a plug-and-play module into most detectors, aiming at detecting occluded prohibited items in X-ray images. Finally, we evaluate our method on the OPIXray dataset and compare it to several baselines, including popular methods for detection and attention mechanisms. As is shown from the results, our proposed method significantly outperforms existing models.
+In this work, first, we contribute a high-quality dataset named OPIXray, each of which is annotated manually by professional inspectors from an international airport. To the best of our knowledge, this is the first dataset specifically designed for object detection in security inspection. Second, we propose a De-occlusion Attention Module (DOAM) that can be inserted as a plug-and-play module into most detectors, aiming at detecting occluded prohibited items in X-ray images. Finally, we evaluate our method on the OPIXray dataset and compare it to several baselines, including popular methods for detection and attention mechanisms. As is shown from the results, our proposed method significantly outperforms existing models. 
 
 ## Dataset
 
