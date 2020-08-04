@@ -53,7 +53,9 @@ In this project, we build the first dataset specially designed for occluded proh
 	<div align=center>
 	    <img src="images/occlusion_distribution.png" width="50%" height="50%"/>
 	</div>
-
+- The information in the annotation file is as follows: 
+	image name, category, top-left position of prohibited item (x1, y1), bottom-right position of target (x2, y2)
+	
 ## Install
 
 1. Install pytorch
