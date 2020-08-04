@@ -53,7 +53,7 @@ In this project, we build the first dataset specially designed for occluded proh
 	<div align=center>
 	    <img src="images/occlusion_distribution.png" width="50%" height="50%"/>
 	</div>
-- The information structure in the annotation file is as follows: 
+- The information structure of annotation file is as follows: 
 	image name, category, top-left position of prohibited item (x1, y1), bottom-right position of prohibited item (x2, y2).
 	
 ## Install
