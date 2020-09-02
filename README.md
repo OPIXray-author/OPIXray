@@ -56,6 +56,11 @@ In this project, we build the first dataset specially designed for occluded proh
 - The information structure of annotation file is as follows: 
 	image name, category, top-left position of prohibited item (x1, y1), bottom-right position of prohibited item (x2, y2).
 
+## Install
+
+1. Access OPIXray dataset
+
+	OPIXray dataset is available only for ACADEMIC PURPOSE, if you are interested in our dataset, feel free to contact rstao@buaa.edu.cn.
 
 ## License
 
