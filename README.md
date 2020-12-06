@@ -58,10 +58,70 @@ In this project, we build the first dataset specially designed for occluded proh
 
 ## Install
 
-1. Access OPIXray dataset
+1. Install pytorch
+
+	The code is tested on python3.5 and pytorch1.3.1
+
+2. Clone the repository
+
+	```
+	git clone https://github.com/OPIXray-author/OPIXray.git
+	```
+
+3. Access OPIXray dataset
 
 	OPIXray dataset is available only for ACADEMIC PURPOSE, if you are interested in our dataset, feel free to contact rstao@buaa.edu.cn.
+## Usage
 
+#### Training
+
+1. change root to `DOAM`
+
+    ```
+    cd DOAM
+    ```
+
+2. modify `OPIXray_ROOT` in `data/OPIXray.py` :
+
+    ```
+    OPIXray_ROOT = 'OPIXray_Dataset/train/'	# path to trainset of OPIXray Dataset
+    ```
+
+3. run `train.py`
+
+    ```
+    python train.py --image_sets 'OPIXray_Dataset/train/train_knife.txt' --transfer './weights/ssd300_mAP_77.43_v2.pth' --save_folder './checkpoints'
+    ```
+
+    - `--save_folder`: the path to save the checkpoint while training.
+    - `--dataset_root`: the path to the training dataset.
+    - `--image_sets`: the path to a TXT file that saves all the picture names used for training.
+    - `--transfer`: indicates the path to SSD pre-trained weight(available at [here](https://s3.amazonaws.com/amdegroot-models/ssd300_mAP_77.43_v2.pth)).
+#### Testing
+
+1. change root to `DOAM`
+
+    ```
+    cd DOAM
+    ```
+
+2. modify `OPIXray_ROOT` in `data/OPIXray.py` :
+
+    ```
+    OPIXray_ROOT = "OPIXray_Dataset/test/"	# path to testset of OPIXray Dataset
+    ```
+    
+3. run `test.py`
+
+    ```
+    python test.py --imagesetfile 'OPIXray_Dataset/test/test_knife.txt' --trained_model './weights/DOAM.pth' 
+    ```
+    
+    - `--imagesetfile`: the path to a TXT file that saves all the picture names used for testing.
+    	- `test_knife.txt`: total testset
+    	- `test_knife-1.txt`: occlusion level 1 (no or slight occlusion).
+    	- `test_knife-2.txt`: occlusion level 2 (partial occlusion).
+    	- `test_knife-3.txt`: occlusion level 3 (severe or full occlusion).
 ## License
 
 The images and the corresponding annotations in OPIXray Dataset can be used **ONLY for academic purposes**, **NOT for commercial purposes**. 
