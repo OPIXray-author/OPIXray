@@ -4,7 +4,7 @@ This repository is the official implementation of **De-occlusion Attention Modul
 
 #### DOAM framework:
 
-![DOAM](images/framework.png)
+![DOAM](images/framework-new.png)
 
 #### OPIXray dataset:
 
