@@ -57,7 +57,7 @@ In this project, we build the first dataset specially designed for occluded proh
 	image name, category, top-left position of prohibited item (x1, y1), bottom-right position of prohibited item (x2, y2).
 #### V2
 - On the basis of the original OPIXray dataset, we added 10000 background pictures excluding the above dangerous items.
-- 
+ 
 	<div align=center>
 	    <img src="images/background.png" width="50%" height="50%"/>
 	</div>
