@@ -25,7 +25,7 @@ This repository is the official implementation of **De-occlusion Attention Modul
 - [Contributing](#contributing)
 - [Acknowledgement](#Acknowledgement)  
 - [License](#license)
-
+ 
 ## Overview
 
 Security inspection often deals with a piece of baggage or suitcase where objects are heavily overlapped with each other, resulting in an unsatisfactory performance for prohibited items detection in X-ray images. 
