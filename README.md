@@ -7,12 +7,6 @@ This repository is **OPIXray dataset** and the official implementation of **De-o
 
 ![DOAM](images/framework.png)
 
-## V2
-
-#### DOAM-O framework:
-
-![DOAM-O](images/framework-o.png)
-
 #### OPIXray dataset:
 
 <div align=center>
@@ -21,6 +15,14 @@ This repository is **OPIXray dataset** and the official implementation of **De-o
 
 [![license](https://img.shields.io/github/license/:user/:repo.svg)](LICENSE)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+
+
+## V2
+
+#### DOAM-O framework:
+
+![DOAM-O](images/framework-o.png)
+
 
 ## Table of Contents
 
