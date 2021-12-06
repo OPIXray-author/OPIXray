@@ -1,4 +1,4 @@
-# [Occluded Prohibited Items Detection: An X-ray Security Inspection Benchmark and De-occlusion Attention Module](https://arxiv.org/abs/2004.08656)
+# [OPIXray dataset and DOAM-O Module](https://arxiv.org/abs/2004.08656)
 
 This repository is the official implementation of **De-occlusion Attention Module(DOAM)** and **OPIXray dataset**. Paper link: https://arxiv.org/abs/2004.08656.
 
