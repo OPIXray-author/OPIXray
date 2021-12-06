@@ -4,16 +4,18 @@ This repository is **OPIXray dataset** and the official implementation of **De-o
 
 ## V2 (submitted to IEEE T-Cyb)
 
-#### DOAM-O framework:
-
-![DOAM-O](images/framework-o.png)
-
-## V1 (published in ACM Multimedia 2020)
 #### OPIXray dataset:
 
 <div align=center>
     <img src="images/samples.png" width="80%" height="80%"/>
 </div>
+
+#### DOAM-O framework:
+
+![DOAM-O](images/framework-o.png)
+
+## V1 (published in ACM Multimedia 2020)
+
 
 #### DOAM model:
 
