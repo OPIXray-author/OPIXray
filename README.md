@@ -1,10 +1,17 @@
 # [OPIXray dataset and DOAM-O Module](https://arxiv.org/abs/2004.08656)
 
 This repository is **OPIXray dataset** and the official implementation of **De-occlusion Attention Module(DOAM-O)**. Paper link: https://arxiv.org/abs/2004.08656.
+## V1
 
 #### DOAM framework:
 
 ![DOAM](images/framework.png)
+
+## V2
+
+#### DOAM-O framework:
+
+![DOAM-O](images/framework-o.png)
 
 #### OPIXray dataset:
 
