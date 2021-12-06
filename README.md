@@ -1,11 +1,9 @@
 # [OPIXray dataset and DOAM-O Module](https://arxiv.org/abs/2004.08656)
 
 This repository is **OPIXray dataset** and the official implementation of **De-occlusion Attention Module(DOAM-O)**. Paper link: https://arxiv.org/abs/2004.08656.
-## V1
+## V1 (published in ACM Multimedia 2020)
 
-#### DOAM framework:
 
-![DOAM](images/framework.png)
 
 #### OPIXray dataset:
 
@@ -13,11 +11,15 @@ This repository is **OPIXray dataset** and the official implementation of **De-o
     <img src="images/samples.png" width="80%" height="80%"/>
 </div>
 
+#### DOAM framework:
+
+![DOAM](images/framework.png)
+
 [![license](https://img.shields.io/github/license/:user/:repo.svg)](LICENSE)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
 
-## V2
+## V2 (submitted to IEEE T-Cyb)
 
 #### DOAM-O framework:
 
