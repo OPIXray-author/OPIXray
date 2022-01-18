@@ -122,7 +122,10 @@ In this project, we build the first dataset specially designed for occluded proh
     - `--dataset_root`: the path to the training dataset.
     - `--image_sets`: the path to a TXT file that saves all the picture names used for training.
     - `--transfer`: indicates the path to SSD pre-trained weight(available at [here](https://s3.amazonaws.com/amdegroot-models/ssd300_mAP_77.43_v2.pth)).
+
+    ```
     Notes: The model can converge after 60 ~ 80 epcoh training, and long-time training will lead to over fitting.
+    ```
 #### Testing
 
 1. change root to `DOAM`
