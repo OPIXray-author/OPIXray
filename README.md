@@ -95,7 +95,7 @@ In this project, we build the first dataset specially designed for occluded proh
 
 3. Access OPIXray dataset
 
-	OPIXray dataset is available only for ACADEMIC PURPOSE, if you are interested in our dataset, feel free to contact rstao@buaa.edu.cn. (Both V1 and V2 datasets are available)
+	OPIXray dataset is available only for ACADEMIC PURPOSE, if you are interested in or have any questions about our dataset, feel free to contact rstao@buaa.edu.cn. (Both V1 and V2 datasets are available)
 ## Usage
 
 #### Training
