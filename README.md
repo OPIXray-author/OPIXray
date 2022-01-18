@@ -151,6 +151,7 @@ In this project, we build the first dataset specially designed for occluded proh
     	- `test_knife-1.txt`: occlusion level 1 (no or slight occlusion).
     	- `test_knife-2.txt`: occlusion level 2 (partial occlusion).
     	- `test_knife-3.txt`: occlusion level 3 (severe or full occlusion).
+    - our model is available at [here](https://pan.baidu.com/s/1G1iKWbV_QS6ghWaDfMPKiQ), password is 2abm.
 ## License
 
 The images and the corresponding annotations in OPIXray Dataset can be used **ONLY for academic purposes**, **NOT for commercial purposes**. 
