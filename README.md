@@ -156,6 +156,19 @@ In this project, we build the first dataset specially designed for occluded proh
 
 The images and the corresponding annotations in OPIXray Dataset can be used **ONLY for academic purposes**, **NOT for commercial purposes**. 
 
+## Citation
+If this work helps your research, please cite the following paper.
+```
+@inproceedings{wei2020occluded,
+  title={Occluded prohibited items detection: An x-ray security inspection benchmark and de-occlusion attention module},
+  author={Wei, Yanlu and Tao, Renshuai and Wu, Zhangjie and Ma, Yuqing and Zhang, Libo and Liu, Xianglong},
+  booktitle={Proceedings of the 28th ACM International Conference on Multimedia},
+  pages={138--146},
+  year={2020}
+}
+
+```
+
 Copyright © 2020 by State Key Lab of Software Development Environment, Beihang University
 
 All rights reserved.
