@@ -127,16 +127,16 @@ def parse_rec(filename):
 
     filename = filename.replace('.xml', '.txt')
     imagename0 = filename.replace('annotation', 'image')
-    imagename1 = imagename0.replace('.txt', '.TIFF')  # jpg form
-    imagename2 = imagename0.replace('.txt', '.tiff')
+    # imagename1 = imagename0.replace('.txt', '.TIFF')  # jpg form
+    # imagename2 = imagename0.replace('.txt', '.tiff')
     imagename3 = imagename0.replace('.txt', '.jpg')
     objects = []
 
-    img = cv2.imread(imagename1)
-    if img is None:
-        img = cv2.imread(imagename2)
-    if img is None:
-        img = cv2.imread(imagename3)
+    img = cv2.imread(imagename3)
+    # if img is None:
+    #     img = cv2.imread(imagename2)
+    # if img is None:
+    #     img = cv2.imread(imagename3)
     height, width, channels = img.shape
     with open(filename, "r", encoding='utf-8') as f1:
         dataread = f1.readlines()
