@@ -1,25 +1,13 @@
-# import torch
-# from torch.autograd import Variable
-# from data import OPIXray_CLASSES as labelmap
-# from test import Timer, get_output_dir,set_type, args, evaluate_detections
-# import warnings
-# warnings.filterwarnings("ignore")
-#
-# import os
-#
-# import numpy as np
-# import pickle
-# import pylab as pl
-#
-# pl.mpl.rcParams['font.sans-serif'] = ['SimHei']
-# pl.mpl.rcParams['axes.unicode_minus'] = False
-# # -*- coding:utf-8 -*-
-
-
 from test import *
+from pathlib import Path
 
+class OPIXrayDetectionSingle(OPIXrayDetection):
+    def __init__(self,img_path,*kargs,**kwargs):
+        super(OPIXrayDetectionSingle, self).__init__(*kargs,**kwargs)
+        self.img_path = Path(img_path)
+        self.ids.append(self.img_path.stem)
 
-def test_main(save_folder, net, cuda, dataset, transform, top_k,
+def test_net_single_img(save_folder, net, cuda, dataset, transform, top_k,
              im_size=300, thresh=0.05):
 
     num_images = len(dataset)
@@ -47,46 +35,50 @@ def test_main(save_folder, net, cuda, dataset, transform, top_k,
     #    im.save(str(i)+'edge.jpg')
     # x = self.edge_conv2d.edge_conv2d(x)
     # else:
-    for i in range(num_images):
-        im, gt, h, w, og_im = dataset.pull_item(i)
-        #img = im.int().cpu().squeeze().permute(1, 2, 0).detach().numpy()
-        #cv2.imwrite('/mnt/SSD/results/orgin'+str(i)+'.jpg', img)
-        # im_saver = cv2.resize(im[(a2,a1,0),:,:].permute((a1,a2,0)).numpy(), (w,h))
-        im = im.type(torch.FloatTensor)
-        im_det = og_im.copy()
-        im_gt = og_im.copy()
+    # for i in range(num_images):
+    i = 0
+    im, gt, h, w, og_im = dataset.pull_item(i)
+    #img = im.int().cpu().squeeze().permute(1, 2, 0).detach().numpy()
+    #cv2.imwrite('/mnt/SSD/results/orgin'+str(i)+'.jpg', img)
+    # im_saver = cv2.resize(im[(a2,a1,0),:,:].permute((a1,a2,0)).numpy(), (w,h))
+    im = im.type(torch.FloatTensor)
+    im_det = og_im.copy()
+    im_gt = og_im.copy()
 
-        # print(im_det)
-        x = Variable(im.unsqueeze(0))
-        if args.cuda:
-            x = x.cuda()
-        _t['im_detect'].tic()
-        detections = net(x).data
-        detect_time = _t['im_detect'].toc(average=False)
+    # print(im_det)
+    x = Variable(im.unsqueeze(0))
+    if args.cuda:
+        x = x.cuda()
+    _t['im_detect'].tic()
+    detections = net(x).data
+    detect_time = _t['im_detect'].toc(average=False)
 
-        # skip j = 0, because it's the background class
-        # //
-        # //
-        print("detections:",detections.size(1))
-        for j in range(1, detections.size(1)):
-            dets = detections[0, j, :]
-            mask = dets[:, 0].gt(0.).expand(5, dets.size(0)).t()
-            dets = torch.masked_select(dets, mask).view(-1, 5)
-            if dets.size(0) == 0:
-                continue
-            boxes = dets[:, 1:]
-            boxes[:, 0] *= w
-            boxes[:, 2] *= w
-            boxes[:, 1] *= h
-            boxes[:, 3] *= h
-            # print(boxes)
-            scores = dets[:, 0].cpu().numpy()
-            cls_dets = np.hstack((boxes.cpu().numpy(),
-                                  scores[:, np.newaxis])).astype(np.float32,
-                                                                 copy=False)
-            all_boxes[j][i] = cls_dets
+    # skip j = 0, because it's the background class
+    # //
+    # //
+    print("detections:",detections.size(1))
+    for j in range(1, detections.size(1)):
+        dets = detections[0, j, :]
+        mask = dets[:, 0].gt(0.).expand(5, dets.size(0)).t()
+        dets = torch.masked_select(dets, mask).view(-1, 5)
+        if dets.size(0) == 0:
+            continue
+        boxes = dets[:, 1:]
+        # print("boxes:",boxes)
+        boxes[:, 0] *= w
+        boxes[:, 2] *= w
+        boxes[:, 1] *= h
+        boxes[:, 3] *= h
+        # print("after boxes:",boxes)
+        #print(boxes.cpu().numpy())
+        scores = dets[:, 0].cpu().numpy()
+        print("scores:",scores)
+        cls_dets = np.hstack((boxes.cpu().numpy(),
+                              scores[:, np.newaxis])).astype(np.float32,
+                                                             copy=False)
+        all_boxes[j][i] = cls_dets
 
-            # print(all_boxes)
+        print(all_boxes)
             #for item in cls_dets:
                 # print(item)
                 # print(item[5])
@@ -115,7 +107,7 @@ def test_main(save_folder, net, cuda, dataset, transform, top_k,
         pickle.dump(all_boxes, f, pickle.HIGHEST_PROTOCOL)
 
     # print('Evaluating detections')
-    evaluate_detections(all_boxes, output_dir, dataset)
+    # evaluate_detections(all_boxes, output_dir, dataset)
 
 if __name__ == '__main__':
     #EPOCHS = [45]
@@ -127,6 +119,10 @@ if __name__ == '__main__':
     #for EPOCH in EPOCHS:
     reset_args()
 
+    parser.add_argument('--image',
+                        default=None, type=str,
+                        help='image file path to inference')
+    args = parser.parse_args()
         # load net
     num_classes = len(labelmap) + 1  # +a1 for background
     if args.cuda:
@@ -138,14 +134,14 @@ if __name__ == '__main__':
     net.eval()
         # print('Finished loading model!')
         # load data
-    dataset = OPIXrayDetection(args.OPIXray_root, args.imagesetfile,
+    dataset = OPIXrayDetectionSingle(img_path=args.image,root=args.OPIXray_root,
                                   #BaseTransform(300, dataset_mean),
-                                  OPIXrayAnnotationTransform(),phase='test')
+                                  target_transform=OPIXrayAnnotationTransform(),phase='test')
     if args.cuda:
         net = net.cuda()
         cudnn.benchmark = True
         # evaluation
 
-    test_main(args.save_folder, net, args.cuda, dataset,
+    test_net_single_img(args.save_folder, net, args.cuda, dataset,
                  None, args.top_k, 300,
                  thresh=args.confidence_threshold)

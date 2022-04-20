@@ -124,7 +124,7 @@ def train():
         cfg = OPIXray
 
 
-        dataset = OPIXrayDetection(root=args.dataset_root, image_sets=args.image_sets,phase='train')
+        dataset = OPIXrayDetection(image_sets=args.image_sets,root=args.dataset_root, phase='train')
 
 
 

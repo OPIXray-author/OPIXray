@@ -102,11 +102,20 @@ def test_Sobel(img):
     return dst
 
 class OPIXrayDetection(data.Dataset):
-    def __init__(self, root,
-                 image_sets,
+    def __init__(self,
+                 image_sets=None,
+                 root=OPIXray_ROOT,
                  transform=None, target_transform=OPIXrayAnnotationTransform(),phase=None):
-        #self.root = root
-        self.root = OPIXray_ROOT
+        '''
+
+        Args:
+            image_sets: image_sets need set value!
+            root:
+            transform:
+            target_transform:
+            phase:
+        '''
+        self.root = root
         self.image_set = image_sets
         self.transform = transform
         self.target_transform = target_transform
@@ -127,12 +136,11 @@ class OPIXrayDetection(data.Dataset):
         self.ids = list()
 
         #listdir = os.listdir(osp.join('%s' % self.root, 'Annotation'))
-
-        with open(self.image_set, 'r') as f:
-            lines = f.readlines()
-            for line in lines:
-                self.ids.append(line.strip('\n'))
-            
+        if self.image_set:
+            with open(self.image_set, 'r') as f:
+                lines = f.readlines()
+                for line in lines:
+                    self.ids.append(line.strip('\n'))
 
     def __getitem__(self, index):
         im, gt, h, w, og_im = self.pull_item(index)

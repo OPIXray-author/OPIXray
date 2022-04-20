@@ -596,7 +596,7 @@ if __name__ == '__main__':
     net.eval()
         # print('Finished loading model!')
         # load data
-    dataset = OPIXrayDetection(args.OPIXray_root, args.imagesetfile,
+    dataset = OPIXrayDetection(args.imagesetfile,args.OPIXray_root,
                                   #BaseTransform(300, dataset_mean),
                                   OPIXrayAnnotationTransform(),phase='test')
     if args.cuda:
