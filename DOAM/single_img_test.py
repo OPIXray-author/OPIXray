@@ -48,7 +48,7 @@ def test_main(save_folder, net, cuda, dataset, transform, top_k,
     # x = self.edge_conv2d.edge_conv2d(x)
     # else:
     for i in range(num_images):
-        im, gt, h, w, og_im = dataset.pull_item()
+        im, gt, h, w, og_im = dataset.pull_item(i)
         #img = im.int().cpu().squeeze().permute(1, 2, 0).detach().numpy()
         #cv2.imwrite('/mnt/SSD/results/orgin'+str(i)+'.jpg', img)
         # im_saver = cv2.resize(im[(a2,a1,0),:,:].permute((a1,a2,0)).numpy(), (w,h))
@@ -67,7 +67,7 @@ def test_main(save_folder, net, cuda, dataset, transform, top_k,
         # skip j = 0, because it's the background class
         # //
         # //
-        print(detections)
+        print("detections:",detections.size(1))
         for j in range(1, detections.size(1)):
             dets = detections[0, j, :]
             mask = dets[:, 0].gt(0.).expand(5, dets.size(0)).t()
@@ -86,7 +86,7 @@ def test_main(save_folder, net, cuda, dataset, transform, top_k,
                                                                  copy=False)
             all_boxes[j][i] = cls_dets
 
-            print(all_boxes)
+            # print(all_boxes)
             #for item in cls_dets:
                 # print(item)
                 # print(item[5])
@@ -129,10 +129,11 @@ if __name__ == '__main__':
 
         # load net
     num_classes = len(labelmap) + 1  # +a1 for background
-    net = build_ssd('test', 300, num_classes)  # initialize SSD
     if args.cuda:
+        net = build_ssd('test', 300, num_classes)  # initialize SSD
         net.load_state_dict(torch.load(args.trained_model))
     else:
+        net = build_ssd('test', 300, num_classes,mode='cpu')
         net.load_state_dict(torch.load(args.trained_model,map_location="cpu"))
     net.eval()
         # print('Finished loading model!')

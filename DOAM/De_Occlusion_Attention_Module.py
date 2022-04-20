@@ -75,11 +75,14 @@ class GatedConv2dWithActivation(torch.nn.Module):
 
 
 class DOAM(nn.Module):
-    def __init__(self):
+    def __init__(self,mode='cuda'):
 
         super(DOAM, self).__init__()
         kernel_const_hori = np.array([[[-1, -2, -1], [0, 0, 0], [1, 2, 1]]], dtype='float32')
-        kernel_const_hori = torch.cuda.FloatTensor(kernel_const_hori).unsqueeze(0)
+        if mode == 'cuda':
+            kernel_const_hori = torch.cuda.FloatTensor(kernel_const_hori).unsqueeze(0)
+        else:
+            kernel_const_hori = torch.FloatTensor(kernel_const_hori).unsqueeze(0)
         self.weight_const_hori = nn.Parameter(data=kernel_const_hori, requires_grad=False)
         #kernel_var_hori = torch.cuda.FloatTensor(torch.zeros(kernel_const_hori.shape))
         #self.weight_var_hori = nn.Parameter(data=kernel_var_hori, requires_grad=False)
@@ -87,7 +90,10 @@ class DOAM(nn.Module):
         self.gamma = nn.Parameter(torch.zeros(1))
 
         kernel_const_vertical = np.array([[[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]]], dtype='float32')
-        kernel_const_vertical = torch.cuda.FloatTensor(kernel_const_vertical).unsqueeze(0)
+        if mode == 'cuda':
+            kernel_const_vertical = torch.cuda.FloatTensor(kernel_const_vertical).unsqueeze(0)
+        else:
+            kernel_const_vertical = torch.FloatTensor(kernel_const_vertical).unsqueeze(0)
         self.weight_const_vertical = nn.Parameter(data=kernel_const_vertical, requires_grad=False)
         #kernel_var_vertical = torch.cuda.FloatTensor(torch.zeros(kernel_const_vertical.shape))
         #self.weight_var_vertical = nn.Parameter(data=kernel_var_vertical, requires_grad=False)

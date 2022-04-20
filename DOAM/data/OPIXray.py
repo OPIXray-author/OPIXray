@@ -23,7 +23,7 @@ OPIXray_CLASSES = (
     'Folding_Knife', 'Straight_Knife','Scissor','Utility_Knife','Multi-tool_Knife',
 )
 
-OPIXray_ROOT = "/mnt/submit_dataset/test/"
+OPIXray_ROOT = "OPIXray_Dataset/test/"
 
 class OPIXrayAnnotationTransform(object):
     """Transforms a VOC annotation into a Tensor of bbox coords and label index
@@ -114,13 +114,13 @@ class OPIXrayDetection(data.Dataset):
         self.name = 'OPIXray0723_knife'
         if(phase == 'test'):
             self._annopath = osp.join('%s' % self.root, 'test_annotation', '%s.txt')
-            self._imgpath = osp.join('%s' % self.root, 'test_image', '%s.TIFF')
-            self._imgpath1 = osp.join('%s' % self.root, 'test_image', '%s.tiff')
+            # self._imgpath = osp.join('%s' % self.root, 'test_image', '%s.TIFF')
+            # self._imgpath1 = osp.join('%s' % self.root, 'test_image', '%s.tiff')
             self._imgpath2 = osp.join('%s' % self.root, 'test_image', '%s.jpg')
         elif(phase == 'train'):
             self._annopath = osp.join('%s' % self.root, 'train_annotation', '%s.txt')
-            self._imgpath = osp.join('%s' % self.root, 'train_image', '%s.TIFF')
-            self._imgpath1 = osp.join('%s' % self.root, 'train_image', '%s.tiff')
+            # self._imgpath = osp.join('%s' % self.root, 'train_image', '%s.TIFF')
+            # self._imgpath1 = osp.join('%s' % self.root, 'train_image', '%s.tiff')
             self._imgpath2 = osp.join('%s' % self.root, 'train_image', '%s.jpg')
         else:
             print('No phase')
@@ -150,12 +150,13 @@ class OPIXrayDetection(data.Dataset):
         target = self._annopath % img_id
         #print(target)
         #print(self._imgpath % img_id)
-        img = cv2.imread(self._imgpath % img_id)
+        img = cv2.imread(self._imgpath2 % img_id)
+        print(self._imgpath2 % img_id)
         if img is None:
-            img = cv2.imread(self._imgpath1 % img_id)
-        if img is None:
-            img = cv2.imread(self._imgpath2 % img_id)
-        if img is None:
+        #     img = cv2.imread(self._imgpath1 % img_id)
+        # if img is None:
+        #     img = cv2.imread(self._imgpath2 % img_id)
+        # if img is None:
             print('wrong')
         #print()
         #print(self._imgpath2 % img_id)
