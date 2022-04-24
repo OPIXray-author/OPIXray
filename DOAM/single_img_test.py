@@ -1,15 +1,16 @@
 from test import *
 from pathlib import Path
 
+
 class OPIXrayDetectionSingle(OPIXrayDetection):
-    def __init__(self,img_path,*kargs,**kwargs):
-        super(OPIXrayDetectionSingle, self).__init__(*kargs,**kwargs)
+    def __init__(self, img_path, *kargs, **kwargs):
+        super(OPIXrayDetectionSingle, self).__init__(*kargs, **kwargs)
         self.img_path = Path(img_path)
         self.ids.append(self.img_path.stem)
 
-def test_net_single_img(save_folder, net, cuda, dataset, transform, top_k,
-             im_size=300, thresh=0.05):
 
+def test_net_single_img(save_folder, net, cuda, dataset, transform, top_k,
+                        im_size=300, thresh=0.05):
     num_images = len(dataset)
     '''
     all detections are collected into:
@@ -38,8 +39,8 @@ def test_net_single_img(save_folder, net, cuda, dataset, transform, top_k,
     # for i in range(num_images):
     i = 0
     im, gt, h, w, og_im = dataset.pull_item(i)
-    #img = im.int().cpu().squeeze().permute(1, 2, 0).detach().numpy()
-    #cv2.imwrite('/mnt/SSD/results/orgin'+str(i)+'.jpg', img)
+    # img = im.int().cpu().squeeze().permute(1, 2, 0).detach().numpy()
+    # cv2.imwrite('/mnt/SSD/results/orgin'+str(i)+'.jpg', img)
     # im_saver = cv2.resize(im[(a2,a1,0),:,:].permute((a1,a2,0)).numpy(), (w,h))
     im = im.type(torch.FloatTensor)
     im_det = og_im.copy()
@@ -56,7 +57,7 @@ def test_net_single_img(save_folder, net, cuda, dataset, transform, top_k,
     # skip j = 0, because it's the background class
     # //
     # //
-    print("detections:",detections.size(1))
+    print("detections:", detections.size(1))
     for j in range(1, detections.size(1)):
         dets = detections[0, j, :]
         mask = dets[:, 0].gt(0.).expand(5, dets.size(0)).t()
@@ -70,26 +71,26 @@ def test_net_single_img(save_folder, net, cuda, dataset, transform, top_k,
         boxes[:, 1] *= h
         boxes[:, 3] *= h
         # print("after boxes:",boxes)
-        #print(boxes.cpu().numpy())
+        # print(boxes.cpu().numpy())
         scores = dets[:, 0].cpu().numpy()
-        print("scores:",scores)
+        print("scores:", scores)
         cls_dets = np.hstack((boxes.cpu().numpy(),
                               scores[:, np.newaxis])).astype(np.float32,
                                                              copy=False)
         all_boxes[j][i] = cls_dets
 
         print(all_boxes)
-            #for item in cls_dets:
-                # print(item)
-                # print(item[5])
-                #if item[4] > thresh:
-                    # print(item)
-                    #chinese = labelmap[j - 1] + str(round(item[4], 2))
-                    # print(chinese+'det\n\n')
-                    #if chinese[0] == 'knife':
-                        #chinese = 'knife' + chinese[6:]
-                    # cv2.rectangle(im_det, (item[0], item[1]), (item[2], item[3]), (0, 0, 255), 2)
-                    # cv2.putText(im_det, chinese, (int(item[0]), int(item[1]) - 5), 0, 0.6, (0, 0, 255), 2)
+        # for item in cls_dets:
+        # print(item)
+        # print(item[5])
+        # if item[4] > thresh:
+        # print(item)
+        # chinese = labelmap[j - 1] + str(round(item[], 2))
+        # print(chinese+'det\n\n')
+        # if chinese[0] == 'knife':
+        # chinese = 'knife' + chinese[6:]
+        # cv2.rectangle(im_det, (item[0], item[1]), (item[2], item[3]), (0, 0, 255), 2)
+        # cv2.putText(im_det, chinese, (int(item[0]), int(item[1]) - 5), 0, 0.6, (0, 0, 255), 2)
         real = 0
         if gt[0][4] == 99:
             real = 0
@@ -101,47 +102,48 @@ def test_net_single_img(save_folder, net, cuda, dataset, transform, top_k,
                 print('this pic dont have the obj:', dataset.ids[i])
                 break
 
-
-
     with open(det_file, 'wb') as f:
         pickle.dump(all_boxes, f, pickle.HIGHEST_PROTOCOL)
 
     # print('Evaluating detections')
     # evaluate_detections(all_boxes, output_dir, dataset)
 
+
 if __name__ == '__main__':
-    #EPOCHS = [45]
-    #EPOCHS = [40,45,50, 55, 60, 65, 70, 75, 80,85,90,95,100,105,110,115,120,125,130,135,140,145]
-    #EPOCHS = [130,135,140,145,150,155,160,165,170,175,180,185,190,195,200,205,210,215,220,225,230,235,240,245,250,255]
+    # EPOCHS = [45]
+    # EPOCHS = [40,45,50, 55, 60, 65, 70, 75, 80,85,90,95,100,105,110,115,120,125,130,135,140,145]
+    # EPOCHS = [130,135,140,145,150,155,160,165,170,175,180,185,190,195,200,205,210,215,220,225,230,235,240,245,250,255]
     # EPOCHS = [90, 95, 100, 105, 110, 115, 120, 125]
-    #EPOCHS = [255]
-    #print(EPOCHS)
-    #for EPOCH in EPOCHS:
+    # EPOCHS = [255]
+    # print(EPOCHS)
+    # for EPOCH in EPOCHS:
     reset_args()
 
     parser.add_argument('--image',
                         default=None, type=str,
                         help='image file path to inference')
     args = parser.parse_args()
-        # load net
+    # load net
     num_classes = len(labelmap) + 1  # +a1 for background
     if args.cuda:
         net = build_ssd('test', 300, num_classes)  # initialize SSD
         net.load_state_dict(torch.load(args.trained_model))
+        print('cuda')
     else:
-        net = build_ssd('test', 300, num_classes,mode='cpu')
-        net.load_state_dict(torch.load(args.trained_model,map_location="cpu"))
+        net = build_ssd('test', 300, num_classes, mode='cpu')
+        net.load_state_dict(torch.load(args.trained_model, map_location="cpu"))
+        print('no cuda')
     net.eval()
-        # print('Finished loading model!')
-        # load data
-    dataset = OPIXrayDetectionSingle(img_path=args.image,root=args.OPIXray_root,
-                                  #BaseTransform(300, dataset_mean),
-                                  target_transform=OPIXrayAnnotationTransform(),phase='test')
+    # print('Finished loading model!')
+    # load data
+    dataset = OPIXrayDetectionSingle(img_path=args.image, root=args.OPIXray_root,
+                                     # BaseTransform(300, dataset_mean),
+                                     target_transform=OPIXrayAnnotationTransform(), phase='train')
     if args.cuda:
         net = net.cuda()
         cudnn.benchmark = True
         # evaluation
 
     test_net_single_img(args.save_folder, net, args.cuda, dataset,
-                 None, args.top_k, 300,
-                 thresh=args.confidence_threshold)
+                        None, args.top_k, 300,
+                        thresh=args.confidence_threshold)

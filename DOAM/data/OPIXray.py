@@ -23,7 +23,7 @@ OPIXray_CLASSES = (
     'Folding_Knife', 'Straight_Knife','Scissor','Utility_Knife','Multi-tool_Knife',
 )
 
-OPIXray_ROOT = "OPIXray_Dataset/test/"
+OPIXray_ROOT = "OPIXray_Dataset/train/"
 
 class OPIXrayAnnotationTransform(object):
     """Transforms a VOC annotation into a Tensor of bbox coords and label index
@@ -122,15 +122,15 @@ class OPIXrayDetection(data.Dataset):
         #self.name = dataset_name
         self.name = 'OPIXray0723_knife'
         if(phase == 'test'):
-            self._annopath = osp.join('%s' % self.root, 'test_annotation', '%s.txt')
+            self._annopath = osp.join('%s' % self.root, '{}_annotation'.format(phase), '%s.txt')
             # self._imgpath = osp.join('%s' % self.root, 'test_image', '%s.TIFF')
             # self._imgpath1 = osp.join('%s' % self.root, 'test_image', '%s.tiff')
-            self._imgpath2 = osp.join('%s' % self.root, 'test_image', '%s.jpg')
+            self._imgpath2 = osp.join('%s' % self.root, '{}_image'.format(phase), '%s.jpg')
         elif(phase == 'train'):
-            self._annopath = osp.join('%s' % self.root, 'train_annotation', '%s.txt')
+            self._annopath = osp.join('%s' % self.root, '{}_annotation'.format(phase), '%s.txt')
             # self._imgpath = osp.join('%s' % self.root, 'train_image', '%s.TIFF')
             # self._imgpath1 = osp.join('%s' % self.root, 'train_image', '%s.tiff')
-            self._imgpath2 = osp.join('%s' % self.root, 'train_image', '%s.jpg')
+            self._imgpath2 = osp.join('%s' % self.root, '{}_image'.format(phase), '%s.jpg')
         else:
             print('No phase')
         self.ids = list()
