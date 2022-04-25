@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from data import OPIXray_CLASSES
+from detection_draw import *
 from test import *
 from utils.analysis import *
 
@@ -46,8 +47,8 @@ def test_net_single_img(save_folder, net, cuda, dataset, transform, top_k,
     # cv2.imwrite('/mnt/SSD/results/orgin'+str(i)+'.jpg', img)
     # im_saver = cv2.resize(im[(a2,a1,0),:,:].permute((a1,a2,0)).numpy(), (w,h))
     im = im.type(torch.FloatTensor)
-    im_det = og_im.copy()
-    im_gt = og_im.copy()
+    # im_det = og_im.copy()
+    # im_gt = og_im.copy()
 
     # print(im_det)
     x = Variable(im.unsqueeze(0))
@@ -64,6 +65,7 @@ def test_net_single_img(save_folder, net, cuda, dataset, transform, top_k,
     class_scores_dict = series2dict(OPIXray_CLASSES)
     class_coordinate_dict = series2dict(OPIXray_CLASSES)
     class_correct_scores = series2dict(OPIXray_CLASSES)
+
     for index, j in enumerate(range(1, detections.size(1))):
         # class now
         present_class = OPIXray_CLASSES[index]
@@ -113,9 +115,9 @@ def test_net_single_img(save_folder, net, cuda, dataset, transform, top_k,
                 print('this pic dont have the obj:', dataset.ids[i])
                 break
 
-    print(class_correct_scores,class_coordinate_dict)
+    print(class_correct_scores, class_coordinate_dict)
 
-    return class_correct_scores,class_coordinate_dict
+    return class_correct_scores, class_coordinate_dict, og_im
 
     # with open(det_file, 'wb') as f:
     #     pickle.dump(all_boxes, f, pickle.HIGHEST_PROTOCOL)
@@ -142,6 +144,8 @@ if __name__ == '__main__':
     # load net
     num_classes = len(labelmap) + 1  # +a1 for background
     if args.cuda:
+
+
         net = build_ssd('test', 300, num_classes)  # initialize SSD
         net.load_state_dict(torch.load(args.trained_model))
         print('cuda')
@@ -160,6 +164,7 @@ if __name__ == '__main__':
         cudnn.benchmark = True
         # evaluation
 
-    test_net_single_img(args.save_folder, net, args.cuda, dataset,
-                        None, args.top_k, 300,
-                        thresh=args.confidence_threshold)
+    result = test_net_single_img(args.save_folder, net, args.cuda, dataset,
+                                 None, args.top_k, 300,
+                                 thresh=args.confidence_threshold)
+    draw_with_coordinate(*result)
