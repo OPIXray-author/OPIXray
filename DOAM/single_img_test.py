@@ -1,5 +1,8 @@
-from test import *
 from pathlib import Path
+
+from data import OPIXray_CLASSES
+from test import *
+from utils.analysis import *
 
 
 class OPIXrayDetectionSingle(OPIXrayDetection):
@@ -57,8 +60,13 @@ def test_net_single_img(save_folder, net, cuda, dataset, transform, top_k,
     # skip j = 0, because it's the background class
     # //
     # //
-    print("detections:", detections.size(1))
-    for j in range(1, detections.size(1)):
+    # print("detections:", detections.size(1))
+    class_scores_dict = series2dict(OPIXray_CLASSES)
+    class_coordinate_dict = series2dict(OPIXray_CLASSES)
+    class_correct_scores = series2dict(OPIXray_CLASSES)
+    for index, j in enumerate(range(1, detections.size(1))):
+        # class now
+        present_class = OPIXray_CLASSES[index]
         dets = detections[0, j, :]
         mask = dets[:, 0].gt(0.).expand(5, dets.size(0)).t()
         dets = torch.masked_select(dets, mask).view(-1, 5)
@@ -73,13 +81,16 @@ def test_net_single_img(save_folder, net, cuda, dataset, transform, top_k,
         # print("after boxes:",boxes)
         # print(boxes.cpu().numpy())
         scores = dets[:, 0].cpu().numpy()
-        print("scores:", scores)
+        scores_list = scores.tolist()
+        class_scores_dict[present_class] = scores_list
+        # print("scores:", scores_list)
         cls_dets = np.hstack((boxes.cpu().numpy(),
                               scores[:, np.newaxis])).astype(np.float32,
                                                              copy=False)
         all_boxes[j][i] = cls_dets
 
-        print(all_boxes)
+        class_correct_scores = max_class(class_scores_dict)
+        class_coordinate_dict[present_class] = boxes.cpu().numpy().tolist()[:len(class_correct_scores[present_class])]
         # for item in cls_dets:
         # print(item)
         # print(item[5])
@@ -102,8 +113,12 @@ def test_net_single_img(save_folder, net, cuda, dataset, transform, top_k,
                 print('this pic dont have the obj:', dataset.ids[i])
                 break
 
-    with open(det_file, 'wb') as f:
-        pickle.dump(all_boxes, f, pickle.HIGHEST_PROTOCOL)
+    print(class_correct_scores,class_coordinate_dict)
+
+    return class_correct_scores,class_coordinate_dict
+
+    # with open(det_file, 'wb') as f:
+    #     pickle.dump(all_boxes, f, pickle.HIGHEST_PROTOCOL)
 
     # print('Evaluating detections')
     # evaluate_detections(all_boxes, output_dir, dataset)
@@ -120,9 +135,10 @@ if __name__ == '__main__':
     reset_args()
 
     parser.add_argument('--image',
-                        default=None, type=str,
+                        default='OPIXray_Dataset/train/train_image/009069.jpg', type=str,
                         help='image file path to inference')
     args = parser.parse_args()
+    sys.argv = []
     # load net
     num_classes = len(labelmap) + 1  # +a1 for background
     if args.cuda:
