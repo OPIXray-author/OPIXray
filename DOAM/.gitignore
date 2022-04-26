@@ -1,3 +1,5 @@
 OPIXray_Dataset/*
 weights/*
 *.zip
+*.pyc
+__pycache__/*

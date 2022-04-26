@@ -75,7 +75,7 @@ class GatedConv2dWithActivation(torch.nn.Module):
 
 
 class DOAM(nn.Module):
-    def __init__(self,mode='cuda'):
+    def __init__(self,mode=None):
 
         super(DOAM, self).__init__()
         kernel_const_hori = np.array([[[-1, -2, -1], [0, 0, 0], [1, 2, 1]]], dtype='float32')

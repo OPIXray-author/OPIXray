@@ -52,6 +52,7 @@ def test_net_single_img(save_folder, net, cuda, dataset, transform, top_k,
 
     # print(im_det)
     x = Variable(im.unsqueeze(0))
+    print(x.shape)
     if args.cuda:
         x = x.cuda()
     _t['im_detect'].tic()
@@ -75,7 +76,7 @@ def test_net_single_img(save_folder, net, cuda, dataset, transform, top_k,
         if dets.size(0) == 0:
             continue
         boxes = dets[:, 1:]
-        # print("boxes:",boxes)
+        print("boxes:",boxes)
         boxes[:, 0] *= w
         boxes[:, 2] *= w
         boxes[:, 1] *= h
@@ -134,6 +135,7 @@ if __name__ == '__main__':
     # EPOCHS = [255]
     # print(EPOCHS)
     # for EPOCH in EPOCHS:
+    from torchsummary import summary
     reset_args()
 
     parser.add_argument('--image',

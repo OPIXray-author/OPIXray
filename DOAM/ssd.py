@@ -138,6 +138,12 @@ class SSD(nn.Module):
                 self.priors.type(type(x.data)),                  # default boxes
 
             )
+        elif self.phase == 'onnx':
+            output = (
+                loc.view(loc.size(0), -1, 4),
+                conf.view(conf.size(0), -1, self.num_classes),
+                x
+            )
 
         else:
             output = (
@@ -237,8 +243,8 @@ mbox = {
 }
 
 
-def build_ssd(phase, size=300, num_classes=21,mode='cuda'):
-    if phase != "test" and phase != "train":
+def build_ssd(phase, size=300, num_classes=21,mode=None):
+    if phase != "test" and phase != "train" and phase != "onnx":
         print("ERROR: Phase: " + phase + " not recognized")
         return
     if size != 300:
@@ -250,6 +256,10 @@ def build_ssd(phase, size=300, num_classes=21,mode='cuda'):
                                          add_extras(extras[str(size)], 1024),
                                          mbox[str(size)], num_classes)
     elif(phase == 'test'):
+        base_, extras_, head_ = multibox(vgg(base[str(size)], 4),
+                                         add_extras(extras[str(size)], 1024),
+                                         mbox[str(size)], num_classes)
+    elif(phase == 'onnx'):
         base_, extras_, head_ = multibox(vgg(base[str(size)], 4),
                                          add_extras(extras[str(size)], 1024),
                                          mbox[str(size)], num_classes)
