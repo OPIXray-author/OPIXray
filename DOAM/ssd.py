@@ -51,6 +51,9 @@ class SSD(nn.Module):
         if phase == 'test':
             self.softmax = nn.Softmax(dim=-1)
             self.detect = Detect(num_classes, 0, 200, 0.01, 0.45)
+        if phase == 'onnx':
+            self.softmax = nn.Softmax(dim=-1)
+            # self.detect = Detect(num_classes, 0, 200, 0.01, 0.45)
 
     def forward(self, x):
         """Applies network layers and ops on input image(s) x.
@@ -141,8 +144,9 @@ class SSD(nn.Module):
         elif self.phase == 'onnx':
             output = (
                 loc.view(loc.size(0), -1, 4),
-                conf.view(conf.size(0), -1, self.num_classes),
-                x
+                self.softmax(conf.view(conf.size(0), -1,
+                                       self.num_classes)),
+                self.priors.type(type(x.data)),
             )
 
         else:
