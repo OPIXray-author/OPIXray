@@ -17,7 +17,7 @@ def result_struct(detections,h, w,all_boxes,OPIXray_CLASSES):
         if dets.size(0) == 0:
             continue
         boxes = dets[:, 1:]
-        print("boxes:", boxes)
+        # print("boxes:", boxes)
         boxes[:, 0] *= w
         boxes[:, 2] *= w
         boxes[:, 1] *= h
