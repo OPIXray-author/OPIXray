@@ -2,7 +2,7 @@
 
 This repository is **OPIXray dataset** and the official implementation of **De-occlusion Attention Module(DOAM-O)**. Paper link: https://arxiv.org/abs/2004.08656.
 
-## V2 (submitted to IEEE T-Cyb)
+## V2 (submitted to IEEE T-NNLS)
 
 #### OPIXray dataset:
 
