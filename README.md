@@ -2,8 +2,7 @@
 
 This repository is **OPIXray dataset** and the official implementation of **De-occlusion Attention Module(DOAM-O)**.
 #### Paper link: https://arxiv.org/abs/2004.08656.
-#### Download link
-Please go to the [webpage](https://github.com/DIG-Beihang/XrayDetection) and download according to the prompts.
+#### Download link: Please go to the [webpage](https://github.com/DIG-Beihang/XrayDetection) and download according to the prompts.
 
 ## V2 (submitted to IEEE T-NNLS)
 
