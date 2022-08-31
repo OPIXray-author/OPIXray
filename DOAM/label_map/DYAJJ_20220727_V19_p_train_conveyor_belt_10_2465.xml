@@ -1,0 +1,26 @@
+<?xml version="1.0" ?><annotation>
+  <filename>DYAJJ_20220727_V19_p_train_conveyor_belt_10_2465.jpg</filename>
+  <size>
+    <width>1831</width>
+    <height>1000</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>caidao</name>
+    <bndbox>
+      <xmin>253</xmin>
+      <ymin>320</ymin>
+      <xmax>557</xmax>
+      <ymax>723</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>zhuizi</name>
+    <bndbox>
+      <xmin>1294</xmin>
+      <ymin>435</ymin>
+      <xmax>1569</xmax>
+      <ymax>502</ymax>
+    </bndbox>
+  </object>
+</annotation>
