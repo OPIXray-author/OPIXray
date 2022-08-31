@@ -28,7 +28,7 @@ class SSD(nn.Module):
         head: "multibox head" consists of loc and conf conv layers
     """
 
-    def __init__(self, phase, size, base, extras, head, num_classes,mode='cuda'):
+    def __init__(self, phase, size, base, extras, head, num_classes,mode='cuda',type='ssd',ft_module=None,pyramid_ext=None):
         super(SSD, self).__init__()
         self.phase = phase
         self.num_classes = num_classes
@@ -42,6 +42,13 @@ class SSD(nn.Module):
         # Layer learns to scale the l2 normalized features from conv4_3
         self.L2Norm = L2Norm(512, 20)
         self.extras = nn.ModuleList(extras)
+
+        if type!='ssd':
+            self.ft_module = nn.ModuleList(ft_module)
+            self.pyramid_ext = nn.ModuleList(pyramid_ext)
+        else:
+            self.ft_module = ft_module
+            self.pyramid_ext = ft_module
 
         self.loc = nn.ModuleList(head[0])
         self._conf = nn.ModuleList(head[1])
@@ -77,6 +84,7 @@ class SSD(nn.Module):
         sources = list()
         loc = list()
         conf = list()
+        transformed_features = list()
 
 
 
@@ -112,6 +120,16 @@ class SSD(nn.Module):
             if k % 2 == 1:
                 sources.append(x)
 
+        #add fssd transformed_features
+        if type!='ssd':
+            assert len(self.ft_module) == len(sources)
+            for k, v in enumerate(self.ft_module):
+                transformed_features.append(v(sources[k]))
+            x = torch.cat(transformed_features, 1)
+            sources = list()
+            for k, v in enumerate(self.pyramid_ext):
+                x = v(x)
+                sources.append(x)
 
         # apply multibox head to source layers
         #xfreq = [0,0,0,0,0]
@@ -235,26 +253,70 @@ def multibox(vgg, extra_layers, cfg, num_classes):
 base = {
     '300': [64, 64, 'M', 128, 128, 'M', 256, 256, 256, 'C', 512, 512, 512, 'M',
             512, 512, 512],
-    '512': [],
+    # '512': [],
+    '512': [64, 64, 'M', 128, 128, 'M', 256, 256, 256, 'C', 512, 512, 512, 'M',
+            512, 512, 512],
 }
 extras = {
     '300': [256, 'S', 512, 128, 'S', 256, 128, 256, 128, 256],
-    '512': [],
+    '512': [256, 'S', 512, 128, 'S', 256, 128, 256, 256, 256,256],
 }
 mbox = {
     '300': [4, 6, 6, 6, 4, 4],  # number of boxes per feature map location
-    '512': [],
+    '512': [6, 6, 6, 6, 6, 4, 4],
 }
 
+class BasicConv(nn.Module):
 
-def build_ssd(phase, size=300, num_classes=21,mode=None):
+    def __init__(self, in_planes, out_planes, kernel_size, stride=1, padding=0, dilation=1, groups=1, relu=True,
+                 bn=False, bias=True, up_size=0):
+        super(BasicConv, self).__init__()
+        self.out_channels = out_planes
+        self.conv = nn.Conv2d(in_planes, out_planes, kernel_size=kernel_size, stride=stride, padding=padding,
+                              dilation=dilation, groups=groups, bias=bias)
+        self.bn = nn.BatchNorm2d(out_planes, eps=1e-5, momentum=0.01, affine=True) if bn else None
+        self.relu = nn.ReLU(inplace=True) if relu else None
+        self.up_size = up_size
+
+    def forward(self, x):
+        x = self.conv(x)
+        if self.bn is not None:
+            x = self.bn(x)
+        if self.relu is not None:
+            x = self.relu(x)
+        if self.up_size > 0:
+            x=F.interpolate(input=x,size=(self.up_size, self.up_size), mode='bilinear')
+        return x
+
+def pyramid_feature_extractor(size):
+
+    if size == 300:
+        layers = [BasicConv(256 * 3, 512, kernel_size=3, stride=1, padding=1),
+                  BasicConv(512, 512, kernel_size=3, stride=2, padding=1), \
+                  BasicConv(512, 256, kernel_size=3, stride=2, padding=1),
+                  BasicConv(256, 256, kernel_size=3, stride=2, padding=1), \
+                  BasicConv(256, 256, kernel_size=3, stride=1, padding=0),
+                  BasicConv(256, 256, kernel_size=3, stride=1, padding=0)]
+    elif size == 512:
+        layers = [BasicConv(256 * 3, 512, kernel_size=3, stride=1, padding=1),
+                  BasicConv(512, 512, kernel_size=3, stride=2, padding=1), \
+                  BasicConv(512, 256, kernel_size=3, stride=2, padding=1),
+                  BasicConv(256, 256, kernel_size=3, stride=2, padding=1), \
+                  BasicConv(256, 256, kernel_size=3, stride=2, padding=1),
+                  BasicConv(256, 256, kernel_size=3, stride=2, padding=1), \
+                  BasicConv(256, 256, kernel_size=4, padding=1, stride=1)]
+    return layers
+
+def build_ssd(phase, size=300, num_classes=21,mode=None,type="ssd"):
     if phase != "test" and phase != "train" and phase != "onnx":
         print("ERROR: Phase: " + phase + " not recognized")
         return
-    if size != 300:
-        print("ERROR: You specified size " + repr(size) + ". However, " +
-              "currently only SSD300 (size=300) is supported!")
-        return
+    if size == 300 or size == 512:
+        pass
+    else:
+        raise("ERROR: You specified size " + repr(size) + ". However, " +
+              "currently only SSD300/SSD512 (size=300/512) is supported!")
+
     if(phase == 'train'):
         base_, extras_, head_ = multibox(vgg(base[str(size)], 3),
                                          add_extras(extras[str(size)], 1024),
@@ -267,4 +329,23 @@ def build_ssd(phase, size=300, num_classes=21,mode=None):
         base_, extras_, head_ = multibox(vgg(base[str(size)], 4),
                                          add_extras(extras[str(size)], 1024),
                                          mbox[str(size)], num_classes)
-    return SSD(phase, size, base_, extras_, head_, num_classes,mode)
+
+    if type =="ssd":
+        layers=None
+    else:
+        if size == 300:
+            up_size = 38
+        elif size == 512:
+            up_size = 64
+
+        layers = []
+        # conv4_3
+        layers += [BasicConv(vgg[24].out_channels, 256, kernel_size=1, padding=0)]
+        # fc_7
+        layers += [BasicConv(vgg[-2].out_channels, 256, kernel_size=1, padding=0, up_size=up_size)]
+        layers += [BasicConv(extras_[-1].out_channels, 256, kernel_size=1, padding=0, up_size=up_size)]
+
+        pyramid_ext = pyramid_feature_extractor(size)
+
+
+    return SSD(phase, size, base_, extras_, head_, num_classes,mode,type=type,ft_module=layers,pyramid_ext=pyramid_ext)
