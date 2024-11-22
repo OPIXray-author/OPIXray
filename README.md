@@ -2,7 +2,14 @@
 
 This repository is **OPIXray dataset** and the official implementation of **De-occlusion Attention Module(DOAM-O)**.
 #### Paper link: https://arxiv.org/abs/2004.08656.
-#### Dataset Download link: Please go to the [webpage](https://github.com/DIG-Beihang/XrayDetection) and download according to the prompts.
+#### Dataset Download link:
+
+(China mainland, BaiduNetdisk) https://pan.baidu.com/s/18LX4C_ZfJUWMF19L0fNdBA password: i17p
+
+(China mainland, BaiduNetdisk, Background Images) https://pan.baidu.com/s/1mc_XNEJlsF_0Rhi8-OHfbA  password: bnqz
+
+
+(Other area, Google Drive) https://drive.google.com/file/d/12moaa-ylpVu0KmUCZj_XXeA5TxZuCQ3o/view?usp=sharing 
 
 ## V2 (submitted to IEEE T-NNLS)
 
@@ -12,12 +19,6 @@ This repository is **OPIXray dataset** and the official implementation of **De-o
     <img src="images/samples.png" width="80%" height="80%"/>
 </div>
 
-(China mainland, BaiduNetdisk) https://pan.baidu.com/s/18LX4C_ZfJUWMF19L0fNdBA password: i17p
-
-(China mainland, BaiduNetdisk, Background Images) https://pan.baidu.com/s/1mc_XNEJlsF_0Rhi8-OHfbA  password: bnqz
-
-
-(Other area, Google Drive) https://drive.google.com/file/d/12moaa-ylpVu0KmUCZj_XXeA5TxZuCQ3o/view?usp=sharing 
 
 #### DOAM-O framework:
 
