@@ -9,7 +9,7 @@ This repository is **OPIXray dataset** and the official implementation of **De-o
 (China mainland, BaiduNetdisk, Background Images) https://pan.baidu.com/s/1mc_XNEJlsF_0Rhi8-OHfbA  password: bnqz
 
 
-(Other area, Google Drive) https://drive.google.com/file/d/12moaa-ylpVu0KmUCZj_XXeA5TxZuCQ3o/view?usp=sharing 
+(Other area, Google Drive) https://drive.google.com/file/d/1lqgH4am3f30tv2FHZrHQNUCVyORB3PLb/view?usp=sharing
 
 ## V2 (submitted to IEEE T-NNLS)
 
